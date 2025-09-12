@@ -1,0 +1,25 @@
+function mostraPalavrasChave() {
+  const texto = document.querySelector("#entrada-de-texto").value;
+  
+  const campoResultado = document.querySelector("#resultado-palavrachave");
+
+  const palavrasChave = processaTexto(texto);
+
+  campoResultado.textContent = palavrasChave.join(", ");
+}
+// código antigo a ser removido
+console.log(ordenadas);
+const PALAVRAS_RUINS = ["pois", "algo", "cada", "durante", "poderia"];
+function processaTexto(texto) {
+  const palavras = texto.split(" ");
+  const palavrasChave = palavras.filter(palavra => !PALAVRAS_RUINS.includes(palavra));
+  return palavrasChave;
+}
+// Instale o compromise.js: npm install compromise
+
+const nlp = require('compromise');
+
+function lematizaTexto(texto) {
+  let doc = nlp(texto);
+  return doc.terms().out('array'); // retorna palavras lematizadas
+}
