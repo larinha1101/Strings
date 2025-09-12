@@ -1,67 +1,45 @@
+// Lista de palavras ruins (aquelas que queremos filtrar)
 const PALAVRAS_RUINS = ["pois", "algo", "cada", "durante", "poderia"];
+
+// Lista de normalizações de palavras (tratamento de plural e gênero)
 const NORMALIZACAO = {
   "aluno": "aluno",
   "aluna": "aluno",
   "alunos": "aluno",
   "alunas": "aluno",
-  // Adicione outras palavras e suas formas principais aqui
+  // Adicione mais palavras conforme necessário
 };
 
-function normalizarPalavra(palavra) {
-  return NORMALIZACAO[palavra.toLowerCase()] || palavra;
-}
-function processaTexto(texto) {
-  const palavras = texto.split(" ");
-  
-  // Filtra palavras ruins e normaliza as palavras
-  const palavrasChave = palavras
-    .filter(palavra => !PALAVRAS_RUINS.includes(palavra))  // Remove palavras ruins
-    .map(normalizarPalavra);  // Normaliza as palavras
-  
-  return palavrasChave;
-}
-function mostraPalavrasChave() {
-  const texto = document.querySelector("#entrada-de-texto").value;
-  const campoResultado = document.querySelector("#resultado-palavrachave");
-
-  // Processa o texto, removendo palavras ruins e normalizando palavras
-  const palavrasChave = processaTexto(texto);
-
-  // Exibe as palavras-chave na tela
-  campoResultado.textContent = palavrasChave.join(", ");
-}
-const PALAVRAS_RUINS = ["pois", "algo", "cada", "durante", "poderia"];
-
-const NORMALIZACAO = {
-  "aluno": "aluno",
-  "aluna": "aluno",
-  "alunos": "aluno",
-  "alunas": "aluno",
-  // Adicione outras palavras e suas formas principais aqui
-};
-
+// Função para normalizar palavras (transformar "aluno", "alunos", "aluna" em "aluno")
 function normalizarPalavra(palavra) {
   return NORMALIZACAO[palavra.toLowerCase()] || palavra;
 }
 
+// Função para processar o texto (filtra as palavras ruins e normaliza as palavras)
 function processaTexto(texto) {
-  const palavras = texto.split(" ");
-  
+  const palavras = texto.split(" ");  // Divide o texto em palavras
+
   // Filtra palavras ruins e normaliza as palavras
   const palavrasChave = palavras
-    .filter(palavra => !PALAVRAS_RUINS.includes(palavra))  // Remove palavras ruins
+    .filter(palavra => !PALAVRAS_RUINS.includes(palavra))  // Remove as palavras ruins
     .map(normalizarPalavra);  // Normaliza as palavras
   
   return palavrasChave;
 }
 
+// Função para exibir as palavras-chave processadas
 function mostraPalavrasChave() {
-  const texto = document.querySelector("#entrada-de-texto").value;
-  const campoResultado = document.querySelector("#resultado-palavrachave");
+  const texto = document.querySelector("#entrada-de-texto").value;  // Pega o texto digitado
+  const campoResultado = document.querySelector("#resultado-palavrachave");  // Pega o campo de resultado
 
-  // Processa o texto, removendo palavras ruins e normalizando palavras
+  // Processa o texto e filtra/normaliza as palavras
   const palavrasChave = processaTexto(texto);
 
-  // Exibe as palavras-chave na tela
+  // Exibe as palavras-chave no campo de resultado, separadas por vírgula
   campoResultado.textContent = palavrasChave.join(", ");
 }
+
+// Evento de clique no botão para extrair as palavras
+const botaoMostraPalavras = document.querySelector("#botao-palavrachave");
+botaoMostraPalavras.addEventListener("click", mostraPalavrasChave);
+
