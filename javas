@@ -1,25 +1,67 @@
-function mostraPalavrasChave() {
-  const texto = document.querySelector("#entrada-de-texto").value;
-  
-  const campoResultado = document.querySelector("#resultado-palavrachave");
-
-  const palavrasChave = processaTexto(texto);
-
-  campoResultado.textContent = palavrasChave.join(", ");
-}
-// código antigo a ser removido
-console.log(ordenadas);
 const PALAVRAS_RUINS = ["pois", "algo", "cada", "durante", "poderia"];
+const NORMALIZACAO = {
+  "aluno": "aluno",
+  "aluna": "aluno",
+  "alunos": "aluno",
+  "alunas": "aluno",
+  // Adicione outras palavras e suas formas principais aqui
+};
+
+function normalizarPalavra(palavra) {
+  return NORMALIZACAO[palavra.toLowerCase()] || palavra;
+}
 function processaTexto(texto) {
   const palavras = texto.split(" ");
-  const palavrasChave = palavras.filter(palavra => !PALAVRAS_RUINS.includes(palavra));
+  
+  // Filtra palavras ruins e normaliza as palavras
+  const palavrasChave = palavras
+    .filter(palavra => !PALAVRAS_RUINS.includes(palavra))  // Remove palavras ruins
+    .map(normalizarPalavra);  // Normaliza as palavras
+  
   return palavrasChave;
 }
-// Instale o compromise.js: npm install compromise
+function mostraPalavrasChave() {
+  const texto = document.querySelector("#entrada-de-texto").value;
+  const campoResultado = document.querySelector("#resultado-palavrachave");
 
-const nlp = require('compromise');
+  // Processa o texto, removendo palavras ruins e normalizando palavras
+  const palavrasChave = processaTexto(texto);
 
-function lematizaTexto(texto) {
-  let doc = nlp(texto);
-  return doc.terms().out('array'); // retorna palavras lematizadas
+  // Exibe as palavras-chave na tela
+  campoResultado.textContent = palavrasChave.join(", ");
+}
+const PALAVRAS_RUINS = ["pois", "algo", "cada", "durante", "poderia"];
+
+const NORMALIZACAO = {
+  "aluno": "aluno",
+  "aluna": "aluno",
+  "alunos": "aluno",
+  "alunas": "aluno",
+  // Adicione outras palavras e suas formas principais aqui
+};
+
+function normalizarPalavra(palavra) {
+  return NORMALIZACAO[palavra.toLowerCase()] || palavra;
+}
+
+function processaTexto(texto) {
+  const palavras = texto.split(" ");
+  
+  // Filtra palavras ruins e normaliza as palavras
+  const palavrasChave = palavras
+    .filter(palavra => !PALAVRAS_RUINS.includes(palavra))  // Remove palavras ruins
+    .map(normalizarPalavra);  // Normaliza as palavras
+  
+  return palavrasChave;
+}
+
+function mostraPalavrasChave() {
+  const texto = document.querySelector("#entrada-de-texto").value;
+  const campoResultado = document.querySelector("#resultado-palavrachave");
+
+  // Processa o texto, removendo palavras ruins e normalizando palavras
+  const palavrasChave = processaTexto(texto);
+
+  // Exibe as palavras-chave na tela
+  campoResultado.textContent = palavrasChave.join(", ");
 }
